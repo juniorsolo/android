@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 mViewHolder.textDollar.setText(String.format("%.2f",(real /4)));
                 mViewHolder.textEuro.setText(String.format("%.2f",(real /5)));
-                
+
             }
         }
     }
