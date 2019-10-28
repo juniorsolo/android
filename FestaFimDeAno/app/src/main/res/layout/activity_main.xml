@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:padding="8dp"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
     <TextView
         android:id="@+id/text_today"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/text_today"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorPrimaryLight" />
 
     <TextView
         android:id="@+id/text_label_days_left"
@@ -41,6 +41,7 @@
 
         />
     <Button
+        android:id="@+id/button_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
