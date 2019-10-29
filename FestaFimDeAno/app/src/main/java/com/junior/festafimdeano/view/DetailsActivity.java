@@ -27,6 +27,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
         this.mViewHolder.check.setOnClickListener(this);
 
+        this.onLoadFromActivity();
     }
 
     @Override
@@ -39,7 +40,18 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
+    private void onLoadFromActivity(){
+        Bundle extras = getIntent().getExtras();
 
+        if(extras != null){
+            String presence = extras.getString(FimDeAnoConstants.PRESENCE_KEY);
+            if(presence != null && presence.equals(FimDeAnoConstants.CONFIRMATION_YES)){
+                this.mViewHolder.check.setChecked(true);
+            }else{
+                this.mViewHolder.check.setChecked(false);
+            }
+        }
+    }
     private static class ViewHolder{
         CheckBox check;
     }

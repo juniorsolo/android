@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.junior.festafimdeano.FimDeAnoConstants;
 import com.junior.festafimdeano.R;
 import com.junior.festafimdeano.dados.SecurityPreferences;
 
@@ -18,11 +19,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ViewHolder mViewHolder = new ViewHolder();
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private SecurityPreferences mSecurityPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.mSecurityPreferences = new SecurityPreferences(this);
 
         this.mViewHolder.textToday = findViewById(R.id.text_today);
         this.mViewHolder.textDaysLeft = findViewById(R.id.text_days_left);
@@ -34,12 +37,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String daysLeft = String.format("%s %s", String.valueOf(this.getDaysLeft()), getString(R.string.days));
 
         this.mViewHolder.textDaysLeft.setText(daysLeft);
+
+        this.verifyPresence();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.verifyPresence();
+    }
+
+    private void verifyPresence() {
+        String confirmPresence = this.mSecurityPreferences.getStoreString(FimDeAnoConstants.PRESENCE_KEY);
+
+        if(confirmPresence.equals("")){
+            this.mViewHolder.buttonConfirm.setText(getString(R.string.not_answered));
+        }
+        else if(confirmPresence.equals(FimDeAnoConstants.CONFIRMATION_YES)){
+            this.mViewHolder.buttonConfirm.setText(getString(R.string.yes));
+        }else{
+            this.mViewHolder.buttonConfirm.setText(getString(R.string.no));
+        }
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.button_confirm){
+
+            String presence = this.mSecurityPreferences.getStoreString(FimDeAnoConstants.PRESENCE_KEY);
+
             Intent intentDetails = new Intent(this,DetailsActivity.class);
+            intentDetails.putExtra(FimDeAnoConstants.PRESENCE_KEY, presence);
             startActivity(intentDetails);
         }
     }
